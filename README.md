@@ -67,19 +67,19 @@ You can easily install the plugin by adding the following to your maven pom.xml 
 ```xml
 <project>
 ...
-    <repositories>
-        <repository>
+    <pluginRepositories>
+        <pluginRepository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+        </pluginRepository>
+    </pluginRepositories>
 ...
 ```
 This snippet will enable Maven dependency download
 directly from Github.com
 
-If you already have a `<repositories>` section in your pom.xml,
-then just add the `<repository>` section.
+If you already have a `<pluginRepositories>` section in your pom.xml,
+then just add the `<pluginRepository>` section.
 
 Once this section is added, you can add the plugin configuration
 section in the `<build><plugins>` section as described in
