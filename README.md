@@ -48,6 +48,16 @@ With your Maven project loaded in IntelliJ, go to:
 
 ![intellij](./docs/images/Intellij.png)
 
+## Build Status
+
+The plugin will detect if a `Exception` object is returned by the
+evaluated Groovy script, and throw a Plugin Build Failure causing
+a `BUILD FAILURE` to be returned.
+
+The default groovy script will detect the http status-code returned
+by Camunda.  The script expects Camunda to return a status code
+of `200`, otherwise a Exception will be thrown.
+
 # Plugin Configuration
 
 The maven plugin provides multiple configuration options.
