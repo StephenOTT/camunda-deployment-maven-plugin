@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.digitalstate.camunda.deployment</groupId>
+    <artifactId>camunda-deployment-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
+    <version>0.5-SNAPSHOT</version>
+    <name>Camunda BPM Deployment Maven Plugin</name>
+    <url>http://github.com/stephenott/camunda-deployment-maven-plugin</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency> <!-- use a specific Groovy version rather than the one specified by spock-core -->
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ivy</groupId>
+            <artifactId>ivy</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+    </dependencies>
+
+    <!--Example usage of Build plugin for Camunda Deployment Maven Plugin-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.digitalstate.camunda.deployment</groupId>
+                <artifactId>camunda-deployment-maven-plugin</artifactId>
+                <version>0.5-SNAPSHOT</version>
+                <!--<configuration>-->
+                    <!--<host>http://localhost:8081</host>-->
+                    <!--<apiPath>/engine-rest</apiPath>-->
+                    <!--<deploymentFilesDir>${project.build.directory}/deploymentFiles</deploymentFilesDir>-->
+                    <!--<scriptPath>scripts/myScript.groovy</scriptPath>  &lt;!&ndash; Path is relative to pom.xml unless full path is provided&ndash;&gt;-->
+                    <!--<additionalConfigs>-->
+                    <!--<someKey>value goes here</someKey>-->
+                    <!--<key2>value goes here</key2>-->
+                    <!--</additionalConfigs>-->
+                <!--</configuration>-->
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
