@@ -92,7 +92,7 @@ Default values:
 | ----------------- | ------------- |
 host | `http://localhost:8080`
 apiPath | `/engine-rest`
-deploymentFilesDir | `${project.build.directory}/camunda-deployment-files-from-source`
+deploymentFilesDir | `${project.build.directory}/camunda-deployment-files-from-source`  This will typically be `./target/camunda-deployment-files-from-source`
 scriptPath | `null`
 additionalConfigs | `null`
 
