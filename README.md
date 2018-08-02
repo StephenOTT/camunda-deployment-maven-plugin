@@ -58,6 +58,38 @@ The default groovy script will detect the http status-code returned
 by Camunda.  The script expects Camunda to return a status code
 of `200`, otherwise a Exception will be thrown.
 
+# How to Install
+
+The plugin is located at http://github.com/stephenott/camunda-deployment-maven-plugin as a release.
+
+You can easily install the plugin by adding the following to your maven pom.xml file:
+
+```xml
+<project>
+...
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+...
+```
+This snippet will enable Maven dependency download
+directly from Github.com
+
+If you already have a `<repositories>` section in your pom.xml,
+then just add the `<repository>` section.
+
+Once this section is added, you can add the plugin configuration
+section in the `<build><plugins>` section as described in
+the [Plugin Configuration](#plugin-configuration) section.
+
+If you are using IntelliJ, you can enable the
+"Auto-download dependencies" feature, which will automatically
+add the missing dependencies described.
+
+
 # Plugin Configuration
 
 The maven plugin provides multiple configuration options.
@@ -66,9 +98,9 @@ The maven plugin provides multiple configuration options.
     <build>
         <plugins>
             <plugin>
-                <groupId>io.digitalstate.camunda.deployment</groupId>
+                <groupId>com.github.StephenOTT</groupId>
                 <artifactId>camunda-deployment-maven-plugin</artifactId>
-                <version>0.5-SNAPSHOT</version>
+                <version>v0.5</version>
                 <configuration>
                     <host>http://localhost:8081</host>
                     <apiPath>/engine-rest</apiPath>
