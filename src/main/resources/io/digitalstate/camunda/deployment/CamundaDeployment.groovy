@@ -10,22 +10,25 @@ import org.jsoup.Jsoup
 import static org.jsoup.Connection.Method.POST
 
 //Script to execute
-Map<String, Object> config = (Map<String, Object>)configs
+Map<String, Object> config = (Map<String, Object>) configs
 String apiUrl = "${config.host}${config.apiPath}"
 String deploymentFiles = config.deploymentFilesDir
+Map<String, Object> additionalConfigs = (Map<String, String>) config.additionalConfigs
 
-deployToUrl(apiUrl, deploymentFiles)
+deployToUrl(apiUrl, deploymentFiles, additionalConfigs)
 
 
 // Helper Methods
-static Connection.Response deploy(String apiUrl, String deploymentFileDir){
+static Connection.Response deploy(String apiUrl,
+                                  String deploymentFileDir,
+                                  Map deploymentConfigs)
+{
 
     Connection deploymentBuild = Jsoup.connect("${apiUrl}/deployment/create")
             .method(POST)
             .headers([
-            'accept': 'application/json',
-//                'content-type': 'multipart/form-data'
-    ])
+                'accept': 'application/json'
+                ])
             .timeout(30000)
             .ignoreContentType(true)
             .ignoreHttpErrors(true)
@@ -35,16 +38,27 @@ static Connection.Response deploy(String apiUrl, String deploymentFileDir){
     dir.eachFileRecurse (FileType.FILES) { file ->
         deploymentBuild.data(file.getName(), file.getName(), file.newInputStream())
     }
-    deploymentBuild.data('deployment-name', 'myDeployment')
-    deploymentBuild.data('enable-duplicate-filtering', 'false')
-    deploymentBuild.data('deploy-changed-only', 'false')
+
+    deploymentBuild.data('deployment-name', deploymentConfigs.deploymentName ?: 'maven-deployment')
+    deploymentBuild.data('enable-duplicate-filtering', deploymentConfigs.duplicateFiltering ?: 'false')
+    deploymentBuild.data('deploy-changed-only', deploymentConfigs.deployChangedOnly ?: 'false')
+    deploymentBuild.data('deployment-source', deploymentConfigs.deploymentSource ?: 'maven')
+
+    if (deploymentConfigs.tenantId){
+        deploymentBuild.data('tenant-id', (String)deploymentConfigs.tenantId)
+    }
+
     // execute the POST and return the response
     Connection.Response deploymentResponse = deploymentBuild.execute()
     return deploymentResponse
 }
 
-static String deployToUrl(String apiUrl, String deploymentFileDir){
-    Connection.Response deploymentResponse = deploy(apiUrl, deploymentFileDir)
+static String deployToUrl(String apiUrl,
+                          String deploymentFileDir,
+                          Map additionalConfigs)
+{
+    Connection.Response deploymentResponse = deploy(apiUrl, deploymentFileDir, additionalConfigs)
+
     if (deploymentResponse.statusCode() == 200){
         try {
             InputStream body = deploymentResponse.bodyStream()

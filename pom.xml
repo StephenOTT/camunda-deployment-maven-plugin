@@ -4,7 +4,7 @@
     <groupId>com.github.StephenOTT</groupId>
     <artifactId>camunda-deployment-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>v0.5</version>
+    <version>v0.6</version>
     <name>Camunda BPM Deployment Maven Plugin</name>
     <url>http://github.com/stephenott/camunda-deployment-maven-plugin</url>
 
@@ -50,17 +50,20 @@
             <plugin>
                 <groupId>com.github.StephenOTT</groupId>
                 <artifactId>camunda-deployment-maven-plugin</artifactId>
-                <version>v0.5</version>
-                <!--<configuration>-->
+                <version>v0.6</version>
+                <configuration>
                     <!--<host>http://localhost:8081</host>-->
                     <!--<apiPath>/engine-rest</apiPath>-->
                     <!--<deploymentFilesDir>${project.build.directory}/deploymentFiles</deploymentFilesDir>-->
                     <!--<scriptPath>scripts/myScript.groovy</scriptPath>  &lt;!&ndash; Path is relative to pom.xml unless full path is provided&ndash;&gt;-->
                     <!--<additionalConfigs>-->
-                    <!--<someKey>value goes here</someKey>-->
-                    <!--<key2>value goes here</key2>-->
+                        <!--<deploymentName>testDeployment123</deploymentName>-->
+                        <!--<duplicateFiltering>false</duplicateFiltering>-->
+                        <!--<deployChangedOnly>false</deployChangedOnly>-->
+                        <!--<deploymentSource>MyLocalComputer</deploymentSource>-->
+                        <!--<tenantId>someTenantName</tenantId>-->
                     <!--</additionalConfigs>-->
-                <!--</configuration>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

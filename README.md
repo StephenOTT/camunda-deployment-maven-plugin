@@ -107,8 +107,11 @@ The maven plugin provides multiple configuration options.
                     <deploymentFilesDir>${project.build.directory}/deploymentFiles</deploymentFilesDir>
                     <scriptPath>scripts/myScript.groovy</scriptPath>  <!-- Path is relative to pom.xml unless full path is provided-->
                     <additionalConfigs>
-                    <someKey>value goes here</someKey>
-                    <key2>value goes here</key2>
+                        <deploymentName>testDeployment123</deploymentName>
+                        <duplicateFiltering>false</duplicateFiltering>
+                        <deployChangedOnly>false</deployChangedOnly>
+                        <deploymentSource>MyLocalComputer</deploymentSource>
+                        <tenantId>someTenantName</tenantId>
                     </additionalConfigs>
                 </configuration>
             </plugin>
@@ -118,7 +121,7 @@ The maven plugin provides multiple configuration options.
 
 All values in teh `<configuration>` section are optional.
 
-Default values:
+## Default values:
 
 | Parameter | Value |
 | ----------------- | ------------- |
@@ -128,7 +131,7 @@ deploymentFilesDir | `${project.build.directory}/camunda-deployment-files-from-s
 scriptPath | `null`
 additionalConfigs | `null`
 
-Configuration Usage:
+## Configuration Usage:
 
 | Configuration Parameter | Usage |
 | ----------------- | ------------- |
@@ -138,6 +141,19 @@ Configuration Usage:
 | scriptPath        | The path to a groovy script file (.groovy) which will be executed instead of the default script file.  See [CamundaDeployment.groovy](./src/main/resources/io/digitalstate/camunda/deployment/CamundaDeployment.groovy) for a working example.
 | additionalConfigs | a Map of Key/Values for holding any extra configuration options to pass into the executing script.  Typically used when using a custom script path with `scriptPath` parameter.
 
+
+### Additional Configs (`<additionalConfigs>`):
+
+The `<additionalConfigs>` has multiple configurations ready to be used
+with the default deployment script:
+
+| Parameter         | Value         | Type     |
+| ----------------- | ------------- | -------- |
+deploymentName | The name for the deployment to be created. Default: `maven-deployment` | String
+duplicateFiltering | A flag indicating whether the process engine should perform duplicate checking for the deployment or not. Default: `false` | Boolean: true/false
+deployChangedOnly | A flag indicating whether the process engine should perform duplicate checking on a per-resource basis. Default: `false` | Boolean: true/false
+deploymentSource | The source for the deployment to be created. Default: `maven` | String
+tenantId | The tenant id for the deployment to be created. Default: null | String
 
 
 # Deployment Output Example
