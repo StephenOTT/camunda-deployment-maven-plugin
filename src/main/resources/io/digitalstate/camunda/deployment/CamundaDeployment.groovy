@@ -13,7 +13,8 @@ import static org.jsoup.Connection.Method.POST
 Map<String, Object> config = (Map<String, Object>) configs
 String apiUrl = "${config.host}${config.apiPath}"
 String deploymentFiles = config.deploymentFilesDir
-Map<String, Object> additionalConfigs = (Map<String, String>) config.additionalConfigs
+// If additionalConfigs are not used then a empty HashMap is generated.
+Map<String, String> additionalConfigs = (Map<String, String>) config.additionalConfigs ?: new HashMap<String, String>()
 
 deployToUrl(apiUrl, deploymentFiles, additionalConfigs)
 
@@ -21,7 +22,7 @@ deployToUrl(apiUrl, deploymentFiles, additionalConfigs)
 // Helper Methods
 static Connection.Response deploy(String apiUrl,
                                   String deploymentFileDir,
-                                  Map deploymentConfigs)
+                                  Map<String, String> deploymentConfigs)
 {
 
     Connection deploymentBuild = Jsoup.connect("${apiUrl}/deployment/create")
@@ -39,10 +40,10 @@ static Connection.Response deploy(String apiUrl,
         deploymentBuild.data(file.getName(), file.getName(), file.newInputStream())
     }
 
-    deploymentBuild.data('deployment-name', deploymentConfigs.deploymentName ?: 'maven-deployment')
-    deploymentBuild.data('enable-duplicate-filtering', deploymentConfigs.duplicateFiltering ?: 'false')
-    deploymentBuild.data('deploy-changed-only', deploymentConfigs.deployChangedOnly ?: 'false')
-    deploymentBuild.data('deployment-source', deploymentConfigs.deploymentSource ?: 'maven')
+    deploymentBuild.data('deployment-name', deploymentConfigs.get('deploymentName', 'maven-deployment'))
+    deploymentBuild.data('enable-duplicate-filtering', deploymentConfigs.get('duplicateFiltering', 'false'))
+    deploymentBuild.data('deploy-changed-only', deploymentConfigs.get('deployChangedOnly', 'false'))
+    deploymentBuild.data('deployment-source', deploymentConfigs.get('deploymentSource', 'maven'))
 
     if (deploymentConfigs.tenantId){
         deploymentBuild.data('tenant-id', (String)deploymentConfigs.tenantId)
@@ -55,7 +56,7 @@ static Connection.Response deploy(String apiUrl,
 
 static String deployToUrl(String apiUrl,
                           String deploymentFileDir,
-                          Map additionalConfigs)
+                          Map<String, String> additionalConfigs)
 {
     Connection.Response deploymentResponse = deploy(apiUrl, deploymentFileDir, additionalConfigs)
 
@@ -68,7 +69,7 @@ static String deployToUrl(String apiUrl,
             return "Deployment Successful: \n${prettyJson}"
 
         } catch (all){
-            throw new Exception("Could not parse the response from Camunda: \n${all}")
+            throw new Exception("Could not parse the response from Camunda: \n${all.getLocalizedMessage()}")
         }
     } else {
         throw new Exception("Deployment Failed. \nStatus Code: ${deploymentResponse.statusCode()}. \nResponse from Camunda: ${deploymentResponse.body()}")

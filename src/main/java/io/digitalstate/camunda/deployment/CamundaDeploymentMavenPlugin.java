@@ -51,7 +51,7 @@ public class CamundaDeploymentMavenPlugin extends AbstractMojo
                 file = getClass().getResource("CamundaDeployment.groovy").toURI();
 
             }catch (Exception e){
-                throw new MojoExecutionException("Something big went wrong...Cannot find CamundaDeployment.groovy: " + e);
+                throw new MojoExecutionException("Something big went wrong...Cannot find CamundaDeployment.groovy: " + e.getLocalizedMessage());
             }
             // If a Custom script path was provided then use it:
         } else {
@@ -59,8 +59,7 @@ public class CamundaDeploymentMavenPlugin extends AbstractMojo
                 file =  new File(scriptPath).toURI();
 
             } catch (Exception e){
-                getLog().error(e);
-                throw new MojoExecutionException("Error with provided script path: " + scriptPath);
+                throw new MojoExecutionException("Error with provided script path: " + scriptPath + "\n" + e.getLocalizedMessage());
             }
         }
         // Eval the groovy script
@@ -69,12 +68,14 @@ public class CamundaDeploymentMavenPlugin extends AbstractMojo
         GroovyShell shell = new GroovyShell(binding);
 
         try {
+            getLog().info("Deployment Destination: " + configs.get("host") + configs.get("apiPath"));
+            getLog().info("Deployment Files: " + configs.get("deploymentFilesDir"));
+
             Object value = shell.evaluate(file);
             getLog().info(value.toString());
 
         } catch (Exception e){
-            getLog().error(e);
-            throw new MojoExecutionException("An error occurred during deployment to Camunda.");
+            throw new MojoExecutionException("An error occurred during deployment to Camunda.\n" + e.getLocalizedMessage());
         }
     }
 }
