@@ -37,7 +37,9 @@ static Connection.Response deploy(String apiUrl,
     // Get each file in the deployment folder
     File dir = new File(deploymentFileDir)
     dir.eachFileRecurse (FileType.FILES) { file ->
-        deploymentBuild.data(file.getName(), file.getName(), file.newInputStream())
+        if (!file.isHidden()) {
+            deploymentBuild.data(file.getName(), file.getName(), file.newInputStream())
+        }
     }
 
     deploymentBuild.data('deployment-name', deploymentConfigs.get('deploymentName', 'maven-deployment'))

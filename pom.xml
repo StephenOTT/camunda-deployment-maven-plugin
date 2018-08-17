@@ -4,7 +4,7 @@
     <groupId>com.github.StephenOTT</groupId>
     <artifactId>camunda-deployment-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>v0.7</version>
+    <version>v0.8</version>
     <name>Camunda BPM Deployment Maven Plugin</name>
     <url>http://github.com/stephenott/camunda-deployment-maven-plugin</url>
 
@@ -46,12 +46,12 @@
 
     <!--Example usage of Build plugin for Camunda Deployment Maven Plugin-->
     <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.StephenOTT</groupId>
-                <artifactId>camunda-deployment-maven-plugin</artifactId>
-                <version>v0.7</version>
-                <configuration>
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>com.github.StephenOTT</groupId>-->
+                <!--<artifactId>camunda-deployment-maven-plugin</artifactId>-->
+                <!--<version>v0.7</version>-->
+                <!--<configuration>-->
                     <!--<host>http://localhost:8081</host>-->
                     <!--<apiPath>/engine-rest</apiPath>-->
                     <!--<deploymentFilesDir>${project.build.directory}/deploymentFiles</deploymentFilesDir>-->
@@ -63,9 +63,9 @@
                         <!--<deploymentSource>MyLocalComputer</deploymentSource>-->
                         <!--<tenantId>someTenantName</tenantId>-->
                     <!--</additionalConfigs>-->
-                </configuration>
-            </plugin>
-        </plugins>
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
     </build>
 
 </project>
